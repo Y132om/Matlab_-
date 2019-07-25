@@ -1,0 +1,41 @@
+clear all;
+close all;
+clc;
+
+img1=imread('Corner.png');
+img2=imread('Corner1.png');
+img3=imread('Corner2.png');
+[height,width]=size(img2);
+a=reshape(img1,1,height*width);
+b=reshape(img2,1,height*width);
+c=reshape(img3,1,height*width);
+
+ma=mean(a);
+mb=mean(b);
+mc=mean(c);
+
+a=a-ma;
+b=b-mb;
+c=c-mc;
+
+x=[a' b' c'];
+x=double(x);
+y=x'*x/(height*width);
+[v,d]=eig(y);%求矩阵y的全部特征值，构成对角阵D，并求y的特征向量构成V的列向量。
+ed=x*v;
+
+img4=zeros(height,width);
+img4=reshape(ed(:,1),height,width);
+
+img5=zeros(height,width);
+img5=reshape(ed(:,2),height,width);
+
+img6=zeros(height,width);
+img6=reshape(ed(:,3),height,width);
+
+imshow(mat2gray(img4));
+figure,imshow(mat2gray(img5));
+figure,imshow(mat2gray(img6));
+ 
+
+
